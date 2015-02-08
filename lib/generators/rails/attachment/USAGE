@@ -1,0 +1,8 @@
+Description:
+    Generate a migration to support a stratosphere attachment on your model. The NAME argument represents the model you would like to add an attachment to and the ATTACHMENT_NAME represents the name of the attachment. i.e. rails generate attachment user avatar.
+
+Example:
+    rails generate attachment model attachment
+
+    This will create:
+        db/migrate/add_attachment_to_model.rb
