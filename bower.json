@@ -1,0 +1,21 @@
+{
+  "name": "stratosphere",
+  "version": "0.0.1",
+  "homepage": "https://github.com/zacharygolba/stratosphere",
+  "authors": [
+    "Zachary Golba <zak@zacharygolba.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/vendor/assets/javascripts",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "rsvp": "3.0.x"
+  }
+}

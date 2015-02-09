@@ -1,12 +1,13 @@
 require 'aws-sdk'
-require 'open-uri'
-require 'rmagick'
 require 'stratosphere/aws'
 require 'stratosphere/attachment'
 require 'stratosphere/config'
 require 'stratosphere/engine'
 require 'stratosphere/has_attachment'
+require 'stratosphere/image'
 require 'stratosphere/style'
+require 'stratosphere/upload'
+require 'stratosphere/video'
 
 module Stratosphere
   class << self

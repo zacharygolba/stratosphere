@@ -14,9 +14,9 @@ module Stratosphere
 
     def adjust_name
       if format
-        self.file_name = "#{file_name.gsub("#{File.extname(file_name)}", "")}#{suffix}.#{format.to_s}"
+        self.file_name = "#{file_name.gsub("#{File.extname(file_name)}", '')}#{suffix}.#{format.to_s}"
       else
-        self.file_name = "#{file_name.gsub("#{File.extname(file_name)}", "")}#{suffix}.#{File.extname(file_name)}"
+        self.file_name = "#{file_name.gsub("#{File.extname(file_name)}", '')}#{suffix}.#{File.extname(file_name)}"
       end
     end
   end
