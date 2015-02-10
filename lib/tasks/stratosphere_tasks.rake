@@ -1,4 +1,4 @@
 # desc "Explaining what the task does"
-# task :stratosphere do
-#   # Task goes here
-# end
+
+namespace :stratosphere do
+end

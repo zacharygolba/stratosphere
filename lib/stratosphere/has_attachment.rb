@@ -6,7 +6,7 @@ module Stratosphere
       def has_attachment(name, options={})
         cattr_accessor :attachment_name, :attachment_type
         
-        self.attachment_name = name
+        self.attachment_name = name.to_sym
         self.attachment_type = options[:type]
         
         define_method "#{name}" do
@@ -23,7 +23,7 @@ module Stratosphere
         send(:before_save) do
           if send(:"#{name}_file_changed?")
             attr = self[:"#{name}_file"]
-            
+
             if [:image, :video].include? options[:type]
               if options[:type] == :image
                 @attachment = Stratosphere::Image.new(self, name, options)
@@ -34,12 +34,7 @@ module Stratosphere
               @attachment = Stratosphere::Attachment.new(self, name, options)
             end
 
-            if attr.class == String && attr =~ /\A\S+\z/
-              self[:"#{name}_file"] = nil
-              @attachment.destroy!
-            elsif attr.class == NilClass
-              @attachment.destroy!
-            end
+            @attachment.destroy! if attr.nil?
           end
         end
 

@@ -7,6 +7,7 @@ module Stratosphere
 
     def initialize(owner, name, options={})
       super
+      @type    = :image
       @styles  = []
       @default = options[:default]
       if @file_name && options[:styles] && options[:styles].count > 0
@@ -25,24 +26,35 @@ module Stratosphere
       end
       url
     end
+
+    def presigned_upload(options)
+      options.merge!(key: "#{base_path}/original/#{options[:file_name]}")
+      options.delete :file_name
+      file_store.presigned_upload options
+    end
     
     def crop(x, y, w, h)
       if styles.count > 0
-        io      = open(url)
-        file    = Magick::Image.from_blob(io.read).first.crop(x.to_i, y.to_i, w.to_i, h.to_i)
-        threads = []
-        io.close
-        styles.each do |style|
-          if style.dimensions
-            t = Thread.new do
-              k = "#{base_path}/#{style.name}/#{file_name}"
-              r = file.resize(style.dimensions[0], style.dimensions[1])
-              Stratosphere::AWS::S3.upload({ key: k, content_type: 'image/jpeg', body: r.to_blob })
+        begin
+          io = open(url)
+          file = Magick::Image.from_blob(io.read).first.crop(x.to_i, y.to_i, w.to_i, h.to_i)
+          threads = []
+          io.close
+          styles.each do |style|
+            if style.dimensions
+              t = Thread.new do
+                k = "#{base_path}/#{style.name}/#{file_name}"
+                r = file.resize(style.dimensions[0], style.dimensions[1])
+                Stratosphere.file_store.upload(key: k, content_type: 'image/jpeg', body: r.to_blob)
+              end
+              threads.push(t)
             end
-            threads.push(t)
           end
+          threads.each(&:join)
+        rescue OpenURI::HTTPError => e
+          puts "Error: Original image not found at '#{url}'"
+          puts e
         end
-        threads.each(&:join)
       end
     end
   end

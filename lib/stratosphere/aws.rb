@@ -1,32 +1,37 @@
 module Stratosphere
   module AWS
     class S3
-      def self.bucket
-        key         = Stratosphere.config.aws[:access_key] 
-        secret      = Stratosphere.config.aws[:secret]
-        region      = Stratosphere.config.aws[:region]
-        resource    = Aws::S3::Resource.new(credentials: Aws::Credentials.new(key, secret), region: region)
-        bucket_name = Stratosphere.config.aws[:s3_bucket]
-        resource.bucket(bucket_name)
+      attr_accessor :credentials, :resource, :region, :bucket_name, :presigner
+      
+      def initialize
+        key                      = Stratosphere.config.aws[:access_key]
+        secret                   = Stratosphere.config.aws[:secret]
+        @region                  = Stratosphere.config.aws[:region]
+        @bucket_name             = Stratosphere.config.aws[:s3_bucket]
+        @credentials             = Aws::Credentials.new(key, secret)
+        @resource                = Aws::S3::Resource.new(credentials: @credentials, region: @region)
+        @presigner               = Aws::S3::Presigner.new(region: @region)
+        Aws.config[:region]      = @region
+        Aws.config[:credentials] = @credentials
+      end
+      
+      def bucket
+        resource.bucket bucket_name
       end
 
-      def self.delete_objects(prefix)
+      def delete_objects(prefix)
         threads = []
         bucket.objects(prefix: prefix).limit(50).each { |object| threads.push Thread.new { object.delete if object } }
         threads.each(&:join)
       end
 
-      def self.upload(options={})
-        self.bucket.put_object(options)
+      def upload(options={})
+        bucket.put_object(options)
       end
 
-      def self.presigned_upload(options={})
-        Aws::S3::Presigner.new.presigned_url(:put_object, {
-            bucket: self.bucket.name,
-            key: options[:key],
-            content_type: options[:content_type],
-            content_length: options[:content_length]
-        })
+      def presigned_upload(options={})
+        params = options.keep_if { |k,v| [:key, :content_type].include? k }.merge!(bucket: bucket_name)
+        presigner.presigned_url(:put_object, params)
       end
     end
 

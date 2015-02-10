@@ -4,6 +4,7 @@ module Stratosphere
 
     def initialize(owner, name, options={})
       super
+      @type    = :video
       @styles  = []
       @default = options[:default]
       if @file_name && options[:styles] && options[:styles].count > 0
@@ -21,6 +22,12 @@ module Stratosphere
         end
       end
       url
+    end
+
+    def presigned_upload(options)
+      options.merge!(key: "#{base_path}/original/#{options[:file_name]}")
+      options.delete :file_name
+      Stratosphere.file_store.presigned_upload options
     end
     
     def encode

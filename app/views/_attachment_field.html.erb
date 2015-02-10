@@ -1,0 +1,19 @@
+<% type = model.send(model.class.attachment_name).type %>
+<% url = model.send(model.class.attachment_name).url %>
+<% file_name = model.send("#{model.class.attachment_name.to_s}_file") %>
+<div class="stratosphere-container" data-stratosphere-enabled="true" data-model-name="<%= model.class.to_s.underscore.pluralize %>" data-model-id="<%= model.id %>" data-attachment-name="<%= model.class.attachment_name.to_s %>">
+    <label class="statosphere-uploader-label"><%= model.class.attachment_name.to_s.capitalize %></label>
+    <% if url %>
+        <div class="current-attachment">
+            <% if type == :image %>
+            <%= image_tag url, width: 32, height: 32, style: 'display: inline-block;' %>
+            <span style="margin-left: 5px;"><%= file_name %></span>
+            <% elsif type == :video %>
+            <video preload="auto" src="<%= url %>"></video>
+            <% else %>
+            <%= file_name %>
+            <% end %>
+        </div>
+    <% end %>
+    <input type="file">
+</div>

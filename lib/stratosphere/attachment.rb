@@ -1,13 +1,14 @@
 module Stratosphere
   class Attachment
-    attr_accessor :base_path, :config, :file_name, :name, :owner
+    attr_accessor :base_path, :config, :file_name, :name, :type, :owner, :file_store
 
     def initialize(owner, name, options={})
       @config      = Stratosphere.config
       @name        = name
       @owner       = owner
       @file_name   = @owner["#{@name}_file"]
-      
+      @type        = :attachment
+      @file_store  = Stratosphere::AWS::S3.new
       set_base_path
     end
     
@@ -28,11 +29,13 @@ module Stratosphere
     end
 
     def presigned_upload(options)
-      Stratosphere::AWS::S3.presigned_upload(options.merge(key: "#{base_path}/#{options[:file_name]}"))
+      options.merge!(key: "#{base_path}/#{options[:file_name]}")
+      options.delete :file_name
+      file_store.presigned_upload options
     end
 
     def destroy!
-      Stratosphere::AWS::S3.delete_objects(base_path)
+      file_store.delete_objects base_path
     end
   end
 end
