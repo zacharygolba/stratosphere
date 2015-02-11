@@ -159,9 +159,9 @@ Coming Soon!
 
 ## Todo
   
-- [] Better tests
-- [] Multiple attachment support per each ActiveRecord Model
-- [] Add additional cloud service providers (Google Cloud Storage, Azure Storage Box, Zencoder Video Encoding)
+- [ ] Better tests
+- [ ] Multiple attachment support per each ActiveRecord Model
+- [ ] Add additional cloud service providers (Google Cloud Storage, Azure Storage Box, Zencoder Video Encoding)
 
 ## Contributing
 
