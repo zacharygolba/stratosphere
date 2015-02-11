@@ -5,7 +5,7 @@
 In today's day and age we have Dropbox, Google Drive, iCloud, etc. Shouldn't file uploading and attachment handling be easier and alot faster in Ruby on Rails Applications?
 Stratosphere makes it easy to **upload directly to cloud storage providers at lightning fast speeds** while maintaining that "magic" Ruby on Rails **convention-over-configuration** we all know and love.
 
-* Currently only supporting AWS S3.
+Currently only supporting AWS S3.
 
 ## Requirements
 
@@ -158,13 +158,10 @@ Coming Soon!
 Coming Soon!
 
 ## Todo
-
-* Better tests
-* Multiple attachment support per each ActiveRecord Model
-* Add additional cloud service providers
-  * Google Cloud Storage
-  * Azure Storage Box
-  * Zencoder (Video Encoding)
+  
+- [] Better tests
+- [] Multiple attachment support per each ActiveRecord Model
+- [] Add additional cloud service providers (Google Cloud Storage, Azure Storage Box, Zencoder Video Encoding)
 
 ## Contributing
 
