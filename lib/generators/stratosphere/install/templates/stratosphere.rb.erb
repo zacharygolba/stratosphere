@@ -2,9 +2,9 @@ Stratosphere.configure do |config|
   config.cloud      = :aws
   config.domain     = 'http://s3.amazonaws.com/<%= @bucket %>'
   config.aws        = {
-      access_key: '<%= @key %>',
-      secret: '<%= @secret %>',
-      region: 'us-east-1',
+      access_key: ENV['AWS_ACCESS_KEY_ID'],
+      secret: ENV['AWS_SECRET_ACCESS_KEY'],
+      region: ENV['AWS_REGION'],
       s3_bucket: '<%= @bucket %>'
   }
 end

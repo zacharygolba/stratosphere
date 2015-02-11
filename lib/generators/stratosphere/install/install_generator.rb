@@ -9,14 +9,7 @@ module Stratosphere
       
       def set_options
         STDOUT.flush
-        
-        print 'What is your AWS Access Key? '
-        @key = gets.chomp
-        
-        print 'What is your AWS Secret? '
-        @secret = gets.chomp
-        
-        print 'What is your S3 Bucket name? '
+        print 'What is your S3 bucket name?: '
         @bucket = gets.chomp
       end
       
