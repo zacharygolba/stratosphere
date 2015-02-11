@@ -10,13 +10,11 @@ Add this line to your application's Gemfile:
 gem 'stratosphere'
 ```
 
-And then execute:
+From the root of your rails app execute: 
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install stratosphere
+    
+    $ rails g stratosphere:install
 
 ## Usage
 
