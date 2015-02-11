@@ -111,7 +111,7 @@ And in any the view:
 <%= render partial: 'stratosphere/attachment_field', locals: { model: @post } %>
 ```
 
-Thats it! No additional routes. No methods or strong parameters to add to your controllers. Just kick ass, highly scalable, lightning fast, AJAX file uploads!
+:cloud: Thats it! No additional routes. No methods or strong parameters to add to your controllers. Just kick ass, highly scalable, lightning fast, AJAX file uploads!
 
 ### Images
 
