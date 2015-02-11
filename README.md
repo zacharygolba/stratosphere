@@ -125,7 +125,7 @@ end
 
 This provides addition features such as a `crop` method, a "default" option, the ability to add additional styles.
 
-#### Setting a Default Image
+##### Setting a Default Image
 
 Set a default image by passing a string with the path to the default image from root of your S3 bucket to the `:default` option in your Model's `has_attachment` method:
 
@@ -157,7 +157,7 @@ Coming Soon!
 
 Coming Soon!
 
-## Todo
+## To Do
   
 - [ ] Better tests
 - [ ] Multiple attachment support per each ActiveRecord Model
