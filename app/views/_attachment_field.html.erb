@@ -1,19 +1,42 @@
-<% type = model.send(model.class.attachment_name).type %>
-<% url = model.send(model.class.attachment_name).url %>
-<% file_name = model.send("#{model.class.attachment_name.to_s}_file") %>
-<div class="stratosphere-container" data-stratosphere-enabled="true" data-model-name="<%= model.class.to_s.underscore.pluralize %>" data-model-id="<%= model.id %>" data-attachment-name="<%= model.class.attachment_name.to_s %>">
-    <label class="statosphere-uploader-label"><%= model.class.attachment_name.to_s.capitalize %></label>
-    <% if url %>
-        <div class="current-attachment">
-            <% if type == :image %>
-            <%= image_tag url, width: 32, height: 32, style: 'display: inline-block;' %>
-            <span style="margin-left: 5px;"><%= file_name %></span>
-            <% elsif type == :video %>
-            <video preload="auto" src="<%= url %>"></video>
+<% attachment = model.send(model.class.attachment_name) %>
+<div class="stratosphere-container" data-stratosphere-enabled="true" data-stratosphere-container-type="field" data-model-name="<%= model.class.to_s.underscore.pluralize %>" data-model-id="<%= model.id %>" data-attachment-name="<%= model.class.attachment_name.to_s %>">
+    <label class="statosphere-uploader-label">
+        <%= model.class.attachment_name.to_s.capitalize %>
+    </label>
+    <div class="upload-controls">
+        <div class="current-attachment" style="display: <%= (attachment.exists? || attachment.has_default?) ? 'inline-block' : 'none' %>; margin-right: 5px;">
+            <% if attachment.type == :image %>
+                <%= image_tag attachment.url, width: 32, height: 32, style: 'display: inline-block;' %>
+                <%= link_to attachment.file_name, attachment.url, target: '_blank', class: 'file-name', style: 'margin-left: 5px;' %>
+            <% elsif attachment.type == :video %>
+                <div>
+                    <video preload="auto" width="320" height="240" controls>
+                        <source src="<%= attachment.url %>" type="<%= attachment.mime_type %>">
+                    </video>
+                </div>
+                <%= link_to attachment.file_name, attachment.url, target: '_blank', class: 'file-name', style: 'margin-left: 5px;' %>
             <% else %>
-            <%= file_name %>
+                <%= link_to attachment.file_name, attachment.url, target: '_blank', class: 'file-name' %>
             <% end %>
         </div>
-    <% end %>
-    <input type="file">
+        <div class="actions" style="display: inline-block;">
+            <div class="upload-container" style="position: relative; display: inline-block;">
+                <% if attachment.type == :image %>
+                    <input type="file" accept="image/*" style="position: absolute; opacity: 0; pointer-events: none;">
+                <% elsif attachment.type == :video %>
+                    <input type="file" accept="video/*" style="position: absolute; opacity: 0; pointer-events: none;">
+                <% else %>
+                    <input type="file" accept="*/*" style="position: absolute; opacity: 0; pointer-events: none;">
+                <% end %>
+                <button class="btn btn-xs btn-primary" data-stratosphere-action="upload">Upload</button>
+            </div>
+            <button class="btn btn-xs btn-danger" data-stratosphere-action="delete" style="display: <%= attachment.exists? ? 'initial' : 'none' %>; margin-left: 3px;">Delete</button>
+        </div>
+    </div>
+    <div class="upload-progress" style="display: none;">
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0;">
+            </div>
+        </div>
+    </div>
 </div>

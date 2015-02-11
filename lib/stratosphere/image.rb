@@ -14,6 +14,10 @@ module Stratosphere
         options[:styles].each { |style| @styles.push Stratosphere::Style.new( style.merge(file_name: @file_name) ) }
       end
     end
+    
+    def has_default?
+      !default.nil?
+    end
 
     def url(style_name=:original)
       url = default ? "#{config.domain}/#{default}" : nil

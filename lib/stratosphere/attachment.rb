@@ -1,12 +1,14 @@
 module Stratosphere
   class Attachment
-    attr_accessor :base_path, :config, :file_name, :name, :type, :owner, :file_store
+    attr_accessor :base_path, :config, :file_name, :name, :size, :mime_type, :type, :owner, :file_store
 
     def initialize(owner, name, options={})
       @config      = Stratosphere.config
       @name        = name
       @owner       = owner
       @file_name   = @owner["#{@name}_file"]
+      @file_size   = @owner["#{@name}_content_length"]
+      @mime_type   = @owner["#{@name}_content_type"]
       @type        = :attachment
       @file_store  = Stratosphere::AWS::S3.new
       set_base_path
@@ -22,6 +24,14 @@ module Stratosphere
       else
         @base_path = "#{plural_model}/#{plural_attr}/#{owner.id}"
       end
+    end
+    
+    def exists?
+      !file_name.nil?
+    end
+
+    def has_default?
+      false
     end
 
     def url

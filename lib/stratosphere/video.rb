@@ -24,10 +24,14 @@ module Stratosphere
       url
     end
 
+    def has_default?
+      !default.nil?
+    end
+
     def presigned_upload(options)
       options.merge!(key: "#{base_path}/original/#{options[:file_name]}")
       options.delete :file_name
-      Stratosphere.file_store.presigned_upload options
+      file_store.presigned_upload options
     end
     
     def encode

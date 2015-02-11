@@ -26,7 +26,7 @@ module Stratosphere
 
       def create_views
         copy_file 'app/views/_attachment_field.html.erb', 'app/views/stratosphere/_attachment_field.html.erb'
-        copy_file 'app/views/_attachment_uploader.html.erb', 'app/views/stratosphere/_attachment_uploader.html.erb'
+        copy_file 'app/assets/javascripts/stratosphere/stratosphere.bundled.min.js', 'vendor/assets/javascripts/stratosphere.bundled.min.js'
       end
     end
   end

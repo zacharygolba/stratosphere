@@ -34,7 +34,14 @@ module Stratosphere
               @attachment = Stratosphere::Attachment.new(self, name, options)
             end
 
-            @attachment.destroy! if attr.nil?
+            if attr.nil? || attr.chomp == ''
+              self[:"#{name}_file"]           = nil
+              self[:"#{name}_content_type"]   = nil
+              self[:"#{name}_content_length"] = nil
+              @attachment.destroy!
+            else
+              @attachment.encode if @attachment.type == :video
+            end
           end
         end
 

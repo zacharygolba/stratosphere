@@ -7,10 +7,11 @@ module Stratosphere
            "argument represents the model you would like to add an attachment to and the #{"\033[36mATTACHMENT_NAME\033[0m"} " <<
            "represents the name of the attachment. i.e. rails generate attachment #{"\033[32muser\033[0m"} #{"\033[36mavatar\033[0m"}."
 
+      argument :model_name, required: true, type: :string
       argument :attachment_name, required: true, type: :string, desc: 'A name for the attachment you would like to add.'
 
       def create_migration
-        generate 'migration', "AddAttachmentTo#{name.classify.pluralize} #{attachment_name}_file:string"
+        generate 'migration', "AddAttachmentTo#{model_name.classify.pluralize} #{attachment_name}_file:string #{attachment_name}_content_type:string #{attachment_name}_content_length:int8"
       end
     end
   end

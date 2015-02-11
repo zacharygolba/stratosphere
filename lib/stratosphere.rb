@@ -6,7 +6,6 @@ require 'stratosphere/engine'
 require 'stratosphere/has_attachment'
 require 'stratosphere/image'
 require 'stratosphere/style'
-require 'stratosphere/upload'
 require 'stratosphere/video'
 
 module Stratosphere
