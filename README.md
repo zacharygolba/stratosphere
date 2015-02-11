@@ -7,7 +7,21 @@ Stratosphere makes it easy to **upload directly to cloud storage providers at li
 
 Currently only supporting AWS S3.
 
-## Requirements
+## Prerequisites
+
+### AWS Setup
+
+Make sure your AWS User has access to your S3 bucket and has the permissions necessary to **list**, **upload**, and **delete**.
+
+![AWS S3 Config](http://cdn.zacharygolba.com/stratosphere/docs/img/s3-configuration.jpg)
+
+In order for Stratoshpere to properly load your AWS configuration in your ~/.bash_profile or ~/.bashrc:
+
+```bash
+export AWS_ACCESS_KEY_ID="your-access-key-id"
+export AWS_SECRET_ACCESS_KEY="your-secret-access-key"
+export AWS_REGION="s3-bucket-region"
+```
 
 ### Ruby/Rails
 
@@ -33,22 +47,6 @@ If your using **Amazon Linux**, **CentOS**, **Red Hat**, or other **RPM** based 
 
 ```bash
 sudo yum install -y ImageMagick ImageMagick-devel
-```
-
-## Prerequisites
-
-### AWS Setup
-
-Make sure your AWS User has access to your S3 bucket and has the permissions necessary to **list**, **upload**, and **delete**.
-
-![AWS S3 Config](http://cdn.zacharygolba.com/stratosphere/docs/img/s3-configuration.jpg)
-
-In order for Stratoshpere to properly load your AWS configuration in your ~/.bash_profile or ~/.bashrc:
-
-```bash
-export AWS_ACCESS_KEY_ID="your-access-key-id"
-export AWS_SECRET_ACCESS_KEY="your-secret-access-key"
-export AWS_REGION="s3-bucket-region"
 ```
 
 ## Installation
