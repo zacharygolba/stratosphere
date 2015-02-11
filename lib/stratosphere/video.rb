@@ -35,7 +35,7 @@ module Stratosphere
     end
     
     def encode
-      if styles.count > 0
+      if styles.map { |s| s.format.nil? ? nil : s }.compact.count > 0
         options = {
             pipeline_id: config.aws[:transcoder][:pipeline],
             input: {

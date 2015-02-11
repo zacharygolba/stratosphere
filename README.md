@@ -113,9 +113,46 @@ And in any the view:
 
 :cloud: Thats it! No additional routes. No methods or strong parameters to add to your controllers. Just kick ass, highly scalable, lightning fast, AJAX file uploads!
 
-### Images
+##### Configuration
 
-For image attachments, you can set the `:type` option in your Model's `has_attachment` method:
+By default, Stratosphere will create an initializer with the following code after running the `rails g stratosphere:install` command:
+
+```ruby
+Stratosphere.configure do |config|
+  config.cloud      = :aws
+  config.domain     = 'http://s3.amazonaws.com/<your-s3-bucket-name>'
+  config.aws        = {
+      access_key: ENV['AWS_ACCESS_KEY_ID'],
+      secret: ENV['AWS_SECRET_ACCESS_KEY'],
+      region: ENV['AWS_REGION'],
+      s3_bucket: '<your-s3-bucket-name>'
+  }
+end
+```
+
+To add a directory prefix to provide Stratosphere better, global insight to where your attachments will be stored in your S3 bucket you can add `config.dir_prefix = 'path/to/attachments'` to the `Stratosphere.configure` block above. Also if you are using Cloudfront to serve assets in you S3 bucket you can change the `config.domain` option to your CloudFront domain name or CNAME.
+
+##### Attachment URLs
+
+To get a URL for your attachment simply execute:
+
+```ruby
+@document = Document.find(1)
+@document.attachment.url
+```
+
+Or for image and video attachments that have additional styles, pass the style that you wish to retrieve a url for as a symbol to the attachment's url method:
+
+```ruby
+@post = Post.find(1)
+@post.image.url(:thumb)
+```
+
+If you do not pass a style to the url method and your attachment has multiple styles, it will default to original.
+
+### Images & Videos
+
+For image/video attachments, you can set the `:type` option in your Model's `has_attachment` method:
 
 ```ruby
 class Post < ActiveRecord::Base
@@ -123,9 +160,15 @@ class Post < ActiveRecord::Base
 end
 ```
 
-This provides addition features such as a `crop` method, a "default" option, the ability to add additional styles.
+```ruby
+class MusicVideo < ActiveRecord::Base
+  has_attachment :video, type: :video
+end
+```
 
-##### Setting a Default Image
+This provides addition features such as a `:default` option, the ability to add additional styles, a `crop` method for images, and an `encode` method for videos.
+
+##### Setting a Default Image/Video
 
 Set a default image by passing a string with the path to the default image from root of your S3 bucket to the `:default` option in your Model's `has_attachment` method:
 
@@ -135,7 +178,7 @@ class Post < ActiveRecord::Base
 end
 ```
 
-#### Styles
+##### Styles
 
 Adding additional styles to your image attachment is as easy as passing an array of hashes with the name of the style and the dimensions of that style in an array ([width, height]):
 
@@ -145,13 +188,54 @@ class Post < ActiveRecord::Base
 end
 ```
 
-#### Cropping
+##### Image Cropping
 
-Coming Soon!
+To crop your image attachment first make sure that you have at least one style set in your Model's `has_attachment` method. Cropping can be done simply making a PATCH request with the following parameters to the relative controller's `update` method:
+ 
+```javascript
+{
+  crop_params: [x, y, width, height]
+}
+```
 
-#### Videos
+You can also manually crop your attachment by executing the following code:
 
-Coming Soon!
+```ruby
+@post = Post.find(1)
+@post.crop(0, 0, 300, 500)
+```
+
+##### Video Encoding
+
+To enable AWS ElasticTranscoder video encoding, add the following `:transcoder` option to the `config.aws` hash in `config/initializers/stratosphere.rb`:
+
+```ruby
+Stratosphere.configure do |config|
+  config.aws = {
+    transcoder: {
+      pipeline: '<pipeline-id>',
+      formats: { mp4: '<preset-id>', webm: '<preset-id>' }
+    }
+  }
+end
+```
+
+Video attachments with multiple styles containing different `:format` options will call encode automatically after your Model's attachment has changed.
+
+You can also manually call the encode method by executing the following code:
+
+```ruby
+@music_video = MusicVideo.find(1)
+@music_video.encode
+```
+
+By default if video encoding is enabled, a :thumb style will be automatically generated. To access the :thumb style simply add the following configuration to your Model's `has_attachment` method:
+
+```ruby
+class MusicVideo < ActiveRecord::Base
+  has_attachment :video, type: :video, styles: [ { name: :thumb, format: :jpg, suffix: '-00001' } ]
+end
+```
 
 ## Example
 
