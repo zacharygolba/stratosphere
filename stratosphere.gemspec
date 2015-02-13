@@ -9,15 +9,17 @@ Gem::Specification.new do |s|
   s.version     = Stratosphere::VERSION
   s.authors     = %w(Zachary Golba)
   s.email       = %w(zak@zacharygolba.com)
-  s.homepage    = 'https://github.com/zacharygolba/stratosphere'
-  s.summary     = 'Attachments in the cloud.'
-  s.description = ''
+  s.homepage    = 'http://stratosphere.zacharygolba.com'
+  s.summary     = 'Lightning fast, easy-to-use, magic attachment handling for Ruby on Rails Applications'
+  s.description = 'In today\'s day and age we have Dropbox, Google Drive, iCloud, etc. Shouldn\'t file uploading and attachment handling be easier and alot faster in Ruby on Rails Applications? Stratosphere makes it easy to upload directly to cloud storage providers at lightning fast speeds while maintaining that "magic" Ruby on Rails convention-over-configuration we all know and love.'
   s.license     = 'MIT'
 
   s.files = Dir['{app,config,db,lib}/**/*', 'LICENSE', 'Rakefile', 'README.md']
   s.test_files = Dir['test/**/*']
 
-  s.add_dependency 'rails', '>= 4.2.0', '~> 4.2'
+  s.required_ruby_version = '>= 2.0.0'
+  
+  s.add_dependency 'rails', '>= 4.0.0', '~> 4.0'
   s.add_dependency 'aws-sdk', '>= 2.0.22', '~> 2.0'
   s.add_dependency 'rmagick', '>= 2.13.4', '~> 2.13'
 end

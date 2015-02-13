@@ -69,9 +69,17 @@ And then:
 rails g stratosphere:install
 ```
 
-You will be asked your S3 Bucket **name** in order for Stratosphere to generate an appropriate initializer.
+You will be asked your S3 Bucket name in order for Stratosphere to generate an appropriate initializer.
 
-After running the `rails g stratosphere:install` command make sure you include **stratosphere.bundled.min** in the asset pipeline AFTER jquery.
+After running the `rails g stratosphere:install` command make sure you include `stratosphere.bundled.min` in the asset pipeline AFTER jquery.
+
+```javascript
+//= require jquery
+//= require jquery_ujs
+//= require turbolinks
+//= require stratosphere.bundled.min
+//= require_tree .
+```
 
 ## Usage
 
@@ -237,7 +245,9 @@ end
 
 ## Example
 
-Coming Soon!
+<a href="http://stratosphere.zacharygolba.com" target="_blank">Check out a live production RoR App with different attachment demonstrations.</a>
+
+The source code for the example app is <a href="https://github.com/zacharygolba/stratosphere-demo" target="_blank">available here</a>.
 
 ## To Do
   
