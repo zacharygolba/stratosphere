@@ -30,7 +30,7 @@ module Stratosphere
       end
 
       def presigned_upload(options={})
-        params = options.keep_if { |k,v| [:key, :content_type, :content_length].include? k }.merge!(bucket: bucket_name)
+        params = options.keep_if { |k,v| [:key, :content_type, :content_length, :acl].include? k }.merge!(bucket: bucket_name)
         presigner.presigned_url(:put_object, params)
       end
     end
