@@ -169,6 +169,7 @@ window.Stratosphere = function() {
 
         xhr.setRequestHeader('Accept', '*/*');
         xhr.setRequestHeader('Content-Type', file.type);
+        xhr.setRequestHeader('x-amz-acl', 'public-read');
 
         xhr.onload = function() {
           if ( xhr.status >= 200 && xhr.status < 400 ) {

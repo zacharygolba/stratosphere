@@ -30,6 +30,9 @@ module Stratosphere
       end
 
       def presigned_upload(options={})
+        unless options.has_key?(:acl)
+          options = options.merge({:acl => "public-read"})
+        end
         params = options.keep_if { |k,v| [:key, :content_type, :content_length, :acl, :cache_control].include? k }.merge!(bucket: bucket_name)
         presigner.presigned_url(:put_object, params)
       end
