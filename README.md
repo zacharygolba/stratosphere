@@ -40,7 +40,7 @@ brew install imagemagick
 If your using **Ubuntu** or other **Debian** based Linux distros you can install ImageMagick with:
 
 ```bash
-sudo apt-get install -y ImageMagick libmagickwand-dev
+sudo apt-get install -y imagemagick libmagickwand-dev
 ```
 
 If your using **Amazon Linux**, **CentOS**, **Red Hat**, or other **RPM** based Linux distros you can install ImageMagick with:
