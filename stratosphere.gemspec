@@ -18,8 +18,8 @@ Gem::Specification.new do |s|
   s.test_files = Dir['test/**/*']
 
   s.required_ruby_version = '>= 2.0.0'
-  
-  s.add_dependency 'rails', '>= 4.0.0', '~> 4.0'
-  s.add_dependency 'aws-sdk', '>= 2.0.22', '~> 2.0'
-  s.add_dependency 'rmagick', '>= 2.13.4', '~> 2.13'
+
+  s.add_dependency 'rails', '~> 4.0'
+  s.add_dependency 'aws-sdk', '~> 2.0'
+  s.add_dependency 'rmagick', '~> 2.0'
 end

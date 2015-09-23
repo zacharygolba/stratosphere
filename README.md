@@ -136,7 +136,21 @@ Stratosphere.configure do |config|
 end
 ```
 
-To add a directory prefix to provide Stratosphere better, global insight to where your attachments will be stored in your S3 bucket you can add `config.dir_prefix = 'path/to/attachments'` to the `Stratosphere.configure` block above. Also if you are using Cloudfront to serve assets in you S3 bucket you can change the `config.domain` option to your CloudFront domain name or CNAME.
+You can also add specification configuration per each Stratosphere model like so:
+
+```ruby
+class Post < ActiveRecord::Base
+  # configuration options here will be merged with the global config
+  # from the Stratosphere initalizer.
+  has_attachment :image, type: :image, config: {
+    aws: {
+      s3_bucket: 'a-different-bucket-name'
+    }
+  }
+end
+```
+
+To add a directory prefix to provide Stratosphere a better, global insight to where your attachments will be stored in your S3 bucket you can add `config.dir_prefix = 'path/to/attachments'` to the `Stratosphere.configure` block above. Also if you are using Cloudfront to serve assets in you S3 bucket you can change the `config.domain` option to your CloudFront domain name or CNAME.
 
 ##### Attachment URLs
 
@@ -197,7 +211,7 @@ end
 ##### Image Cropping
 
 To crop your image attachment first make sure that you have at least one style set in your Model's `has_attachment` method. Cropping can be done simply making a PATCH request with the following parameters to the relative controller's `update` method:
- 
+
 ```javascript
 {
   crop_params: [x, y, width, height]
@@ -250,7 +264,7 @@ end
 The source code for the example app is <a href="https://github.com/zacharygolba/stratosphere-demo" target="_blank">available here</a>.
 
 ## To Do
-  
+
 - [ ] Better tests
 - [ ] Multiple attachment support per each ActiveRecord Model
 - [ ] Add additional cloud service providers (Google Cloud Storage, Azure Storage Box, Zencoder Video Encoding)

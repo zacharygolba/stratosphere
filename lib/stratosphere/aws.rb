@@ -2,19 +2,19 @@ module Stratosphere
   module AWS
     class S3
       attr_accessor :credentials, :resource, :region, :bucket_name, :presigner
-      
-      def initialize
-        key                      = Stratosphere.config.aws[:access_key]
-        secret                   = Stratosphere.config.aws[:secret]
-        @region                  = Stratosphere.config.aws[:region]
-        @bucket_name             = Stratosphere.config.aws[:s3_bucket]
+
+      def initialize(config={})
+        key                      = config.aws[:access_key]
+        secret                   = config.aws[:secret]
+        @region                  = config.aws[:region]
+        @bucket_name             = config.aws[:s3_bucket]
         @credentials             = Aws::Credentials.new(key, secret)
         @resource                = Aws::S3::Resource.new(credentials: @credentials, region: @region)
         @presigner               = Aws::S3::Presigner.new(region: @region)
         Aws.config[:region]      = @region
         Aws.config[:credentials] = @credentials
       end
-      
+
       def bucket
         resource.bucket bucket_name
       end
