@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.0.0'
 
-  s.add_dependency 'rails', '>= 4.2.4', '~> 4.2'
-  s.add_dependency 'aws-sdk', '>= 2.1.23', '~> 2.0'
-  s.add_dependency 'rmagick', '>= 2.15.4', '~> 2.15'
+  s.add_dependency 'rails', '~> 4.0'
+  s.add_dependency 'aws-sdk', '~> 2.0'
+  s.add_dependency 'rmagick', '~> 2.0'
 end

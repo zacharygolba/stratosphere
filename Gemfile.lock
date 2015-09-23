@@ -2,9 +2,9 @@ PATH
   remote: .
   specs:
     stratosphere (0.0.2)
-      aws-sdk (~> 2.0, >= 2.1.23)
-      rails (~> 4.2, >= 4.2.4)
-      rmagick (~> 2.15, >= 2.15.4)
+      aws-sdk (~> 2.0)
+      rails (~> 4.0)
+      rmagick (~> 2.0)
 
 GEM
   remote: https://rubygems.org/
