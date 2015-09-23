@@ -1,4 +1,5 @@
-# Stratosphere
+# Stratosphere [![Dependency Status](https://gemnasium.com/zacharygolba/stratosphere.svg)](https://gemnasium.com/zacharygolba/stratosphere)
+
 
 ### Lightning fast, easy-to-use, magic attachment handling for Ruby on Rails Applications
 
